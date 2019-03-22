@@ -11,7 +11,12 @@ import Message from './views/message/Message.vue'
 import Kindergarten from './views/kindergarten/Kindergarten.vue'
 import Student from './views/student/Student.vue'
 import Administrators from './views/administrators/Administrators.vue'
+import AddAdmin from './views/addAdmin/AddAdmin.vue'
 import Record from './views/record/Record.vue'
+import AddProduct from './views/addproduct/AddProduct.vue'
+import StudentDetail from './views/studentDetail/StudentDetail.vue'
+import KindergartenDetail from './views/kindergartendetail/KindergartenDetail.vue'
+import AddKindergarten from './views/addKindergarten/AddKindergarten.vue'
 
 
 Vue.use(Router)
@@ -27,10 +32,11 @@ export default new Router({
       component: Login
     },
     {
-      path: '/home',
+      path: '/',
       name: '首页',
       iconCls: 'ios-home',
       component: Home,
+      redirect:'/main',
       children: [
         { path: '/main', component: Main, name: '首页2'}
       ]
@@ -53,7 +59,7 @@ export default new Router({
       component: Home,
       children: [
         { path: '/advertisement', component: Advertisement, name: '广告管理'},
-        { path: '/message', component: Message, name: '客户端信息发布'},
+        { path: '/message', component: Message, name: '客户端信息发布'}
       ]
     },
     {
@@ -67,14 +73,56 @@ export default new Router({
       ]
     },
     {
-      path: '/',
+      path: '/addadmin',
+      hidden: true,
+      component: Home,
+      children: [
+        { path: '/AddAdmin', component: AddAdmin, name: '添加管理员'}
+      ]
+    },
+    {
+      path: '/home',
       name: '系统',
       iconCls: 'md-settings',
+      redirect:'/administrators',
       component: Home,
       children: [
         { path: '/administrators', component: Administrators, name: '管理员'},
         { path: '/record', component: Record, name: '访问记录'}
       ]
+    },
+    {
+      path: '/addproduct',
+      hidden: true,
+      component: Home,
+      children: [
+        { path: '/addproduct', component: AddProduct, name: '添加产品'}
+      ]
+    },
+    {
+      path: '/studentDetail',
+      hidden: true,
+      component: Home,
+      children: [
+        { path: '/studentDetail', component: StudentDetail, name: '用户详情'}
+      ]
+    },
+    {
+      path: '/kindergartenDetail',
+      hidden: true,
+      component: Home,
+      children: [
+        { path: '/KindergartenDetail', component: KindergartenDetail, name: '幼儿园详情'}
+      ]
+    },
+    {
+      path: '/addKindergarten',
+      hidden: true,
+      component: Home,
+      children: [
+        { path: '/addKindergarten', component: AddKindergarten, name: '添加幼儿园'}
+      ]
     }
+
   ]
 })

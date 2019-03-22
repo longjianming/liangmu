@@ -7,20 +7,23 @@
                <Modal title="提示" v-model="modallg" @on-ok="ok" @on-cancel="cancel" class-name="vertical-center-modal">
                    <p>确认退出吗?</p>
                </Modal>
+                <!--<Tip mod="modallg = true" content="确认退出吗?"></Tip>-->
 
            </Col>
        </div>
        <div class="main">
            <!--导航菜单-->
            <aside class="nav">
-               <Menu :theme="theme2" accordion="true">
+               <Menu :theme="theme2" :accordion="true">
                    <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-                       <MenuItem v-if="item.children.length<1" :name="item.name" :key="'menuitem' + item.name">
-                           <Icon :type="item.iconCls" />
-                           {{item.name}}
-                       </MenuItem>
+                       <template v-if="item.children && item.children.length==1">
+                           <MenuItem :name="item.children[0].name" :key="'menuitem' + item.children[0].name" @click.native="$router.push(item.children[0].path)">
+                               <Icon :type="item.iconCls" />
+                               {{item.name}}
+                           </MenuItem>
+                       </template>
 
-                       <Submenu :name="index" v-if="!item.hidden && item.children.length>0">
+                       <Submenu :name="index" v-if="!item.hidden && item.children.length>1">
                            <template slot="title">
                                <Icon :type="item.iconCls" />
                                {{item.name}}
@@ -41,12 +44,16 @@
    </div>
 </template>
 <script>
+    import Tip from '@/components/tip/Tip.vue'
     export default {
         data(){
             return {
                 theme2: 'dark',
                 modallg: false
             }
+        },
+        components: {
+            Tip
         },
         created(){
 

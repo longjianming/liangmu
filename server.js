@@ -19,22 +19,24 @@ app.all('*', function(req, res, next) {
     res.header('Content-Type', 'application/json;charset=utf-8');
     next();
 });
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.post('/api/*',function(req,res) {
-    // res.end(JSON.stringify({name:'aaaa'}))
     let apiUrl = 'http://129.204.140.140:3500' + req.path.slice(4)
-    console.log(apiUrl)
+    //console.log(apiUrl)
     request({
         url: apiUrl,//请求路径
         method: "POST",//请求方式，默认为get
+        json: true,
         headers: {//设置请求头
-            // "content-type": "application/json",
+             "content-type": "application/json",
         },
-        body: JSON.stringify(req.body)//post参数字符串
+        body: req.body//post参数字符串
     }, function(error, response, body) {
-        res.end(body)
+        res.send(body)
+        console.log(body);
     });
 
 })
